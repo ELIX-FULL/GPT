@@ -39,11 +39,11 @@ dp = Dispatcher()
 
 # Starts a conversation
 @dp.message(Command('start'))
-@dp.message(States.ENTRY_STATE, F.text.regexp(r'^🔙Back$'))
-@dp.message(States.CHATGPT_STATE, F.text.regexp(r'^🔙Back$'))
-@dp.message(States.DALL_E_STATE, F.text.regexp(r'^🔙Back$'))
-@dp.message(States.STABLE_STATE, F.text.regexp(r'^🔙Back$'))
-@dp.message(States.INFO_STATE, F.text.regexp(r'^🔙Back$'))
+@dp.message(States.ENTRY_STATE, F.text.regexp(r'^🔙Назад$'))
+@dp.message(States.CHATGPT_STATE, F.text.regexp(r'^🔙Назад$'))
+@dp.message(States.DALL_E_STATE, F.text.regexp(r'^🔙Назад$'))
+@dp.message(States.STABLE_STATE, F.text.regexp(r'^🔙Назад$'))
+@dp.message(States.INFO_STATE, F.text.regexp(r'^🔙Назад$'))
 async def start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     username = message.from_user.username
@@ -76,12 +76,12 @@ async def start(message: types.Message, state: FSMContext):
 @dp.message(States.ENTRY_STATE, F.text.regexp(r'^🌄Генерация изображений — DALL·E$'))
 @dp.message(States.ENTRY_STATE, F.text.regexp(r'^🌅Генерация изображений — Stable Diffusion$'))
 async def question_handler(message: types.Message, state: FSMContext):
-    button = [[KeyboardButton(text="🔙Back")]]
+    button = [[KeyboardButton(text="🔙Назад")]]
     reply_markup = ReplyKeyboardMarkup(
         keyboard=button, resize_keyboard=True
     )
     await message.answer(
-        text="Enter your text: 👇🏻",
+        text="Напиши свой запрос или нажми назад: 👇🏻",
         reply_markup=reply_markup,
     )
     option = message.text
@@ -235,6 +235,7 @@ async def display_info(message: types.Message, state: FSMContext):
 @dp.message(States.INFO_STATE, F.text.regexp(r'^💰Купить токены и генерации$'))
 @dp.message(States.PURCHASE_CHATGPT_STATE, F.text.regexp(r'^🔙Назад$'))
 @dp.message(States.PURCHASE_DALL_E_STATE, F.text.regexp(r'^🔙Назад$'))
+@dp.message(States.PURCHASE_STATE, F.text.regexp(r'^🔙Назад'))
 @dp.message(States.PURCHASE_STABLE_STATE, F.text.regexp(r'^🔙Назад$'))
 async def purchase(message: types.Message, state: FSMContext):
     button = [[KeyboardButton(text="100K ChatGPT токенов - 5 USD💵")],
