@@ -8,7 +8,6 @@ client = AsyncOpenAI(
     api_key=getenv("OPENAI_API_KEY"),
 )
 
-
 class OpenAiTools:
     async def get_chatgpt(question: str):
         prompt = question
